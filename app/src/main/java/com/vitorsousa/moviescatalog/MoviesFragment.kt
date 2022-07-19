@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import com.vitorsousa.moviescatalog.databinding.FragmentMovieDetailsBinding
 import com.vitorsousa.moviescatalog.databinding.FragmentMoviesListBinding
 import com.vitorsousa.moviescatalog.placeholder.PlaceholderContent
 
@@ -17,53 +19,39 @@ import com.vitorsousa.moviescatalog.placeholder.PlaceholderContent
  */
 class MoviesFragment : Fragment(), MovieItemListener {
 
-    private var columnCount = 1
-    lateinit var binding: FragmentMoviesListBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
-    }
+    private val viewModel: MovieViewModel by activityViewModels()
+    private lateinit var binding: FragmentMoviesListBinding
+    private lateinit var adapter: MyMovieRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMoviesListBinding.inflate(layoutInflater)
-        val view = binding.root
+        val view = binding.root as RecyclerView
+        adapter = MyMovieRecyclerViewAdapter(this)
 
-        with(view) {
-            layoutManager = when {
-                columnCount <= 1 -> LinearLayoutManager(context)
-                else -> GridLayoutManager(context, columnCount)
-            }
-            adapter = MyMovieRecyclerViewAdapter(PlaceholderContent.ITEMS, this@MoviesFragment)
+        view.apply {
+            this.adapter = this@MoviesFragment.adapter
+            this.layoutManager = LinearLayoutManager(context)
         }
 
+        initObservers()
         return view
     }
 
+    private fun initObservers() {
+        viewModel.movieListLiveData.observe(viewLifecycleOwner) {
+            adapter.updateList(it)
+        }
+        viewModel.navigationToDetailsLive.observe(viewLifecycleOwner) {
+            val action = MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment()
+            findNavController().navigate(action)
+        }
+    }
+
     override fun onItemSelected(position: Int) {
-        findNavController().navigate(R.id.action_moviesFragment_to_movieDetailsFragment)
+        viewModel.onHQSelected(position)
     }
 
-
-
-    companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            MoviesFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
-    }
 }

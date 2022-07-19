@@ -14,9 +14,16 @@ interface MovieItemListener {
 }
 
 class MyMovieRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>,
     private val listener: MovieItemListener
 ) : RecyclerView.Adapter<MyMovieRecyclerViewAdapter.ViewHolder>() {
+
+    private val values: MutableList<PlaceholderItem> = ArrayList()
+
+    fun updateList(hqList: List<PlaceholderItem>) {
+        values.clear()
+        values.addAll(hqList)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -32,23 +39,20 @@ class MyMovieRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
-
-        holder.cardView.setOnClickListener {
+        holder.bindItem(item)
+        holder.view.setOnClickListener {
             listener.onItemSelected(position)
         }
     }
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentMoviesItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        val cardView: View = binding.cardView
-        val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
+    inner class ViewHolder(private val binding: FragmentMoviesItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        val view: View = binding.root
 
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+        fun bindItem(item: PlaceholderItem) {
+            binding.movie = item
+            binding.executePendingBindings()
         }
     }
 
