@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.vitorsousa.moviescatalog.data.Movie
 
 import com.vitorsousa.moviescatalog.placeholder.PlaceholderContent.PlaceholderItem
 import com.vitorsousa.moviescatalog.databinding.FragmentMoviesItemBinding
@@ -16,11 +17,10 @@ class MyMovieRecyclerViewAdapter(
     private val listener: MovieItemListener
 ) : RecyclerView.Adapter<MyMovieRecyclerViewAdapter.ViewHolder>() {
 
-    private val values: MutableList<PlaceholderItem> = ArrayList()
+    private var values: List<Movie> = ArrayList()
 
-    fun updateList(hqList: List<PlaceholderItem>) {
-        values.clear()
-        values.addAll(hqList)
+    fun updateList(movies: List<Movie>) {
+        values = movies
         notifyDataSetChanged()
     }
 
@@ -49,7 +49,7 @@ class MyMovieRecyclerViewAdapter(
     inner class ViewHolder(private val binding: FragmentMoviesItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val view: View = binding.root
 
-        fun bindItem(item: PlaceholderItem) {
+        fun bindItem(item: Movie) {
             binding.movie = item
             binding.executePendingBindings()
         }

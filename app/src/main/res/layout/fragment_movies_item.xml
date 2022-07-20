@@ -6,7 +6,7 @@
     <data>
         <variable
             name="movie"
-            type="com.vitorsousa.moviescatalog.placeholder.PlaceholderContent.PlaceholderItem" />
+            type="com.vitorsousa.moviescatalog.data.Movie" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:layout_marginTop="10dp"
-                android:text="@{movie.id}"
+                android:text="@{movie.title}"
                 android:textAppearance="?attr/textAppearanceListItem"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:text="@{movie.content}"
+                android:text="@{movie.release_date}"
                 android:textAppearance="?attr/textAppearanceListItem"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView"

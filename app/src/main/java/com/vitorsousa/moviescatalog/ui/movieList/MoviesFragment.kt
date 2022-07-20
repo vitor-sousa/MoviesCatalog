@@ -11,10 +11,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.vitorsousa.moviescatalog.ui.MovieViewModel
 import com.vitorsousa.moviescatalog.databinding.FragmentMoviesListBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A fragment representing a list of Movies.
  */
+@AndroidEntryPoint
 class MoviesFragment : Fragment(), MovieItemListener {
 
     private val viewModel: MovieViewModel by activityViewModels()

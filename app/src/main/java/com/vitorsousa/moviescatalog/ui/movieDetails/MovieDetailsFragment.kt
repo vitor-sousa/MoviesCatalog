@@ -10,8 +10,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.vitorsousa.moviescatalog.ui.MovieViewModel
 import com.vitorsousa.moviescatalog.databinding.FragmentMovieDetailsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieDetailsBinding
@@ -31,7 +32,7 @@ class MovieDetailsFragment : Fragment() {
 
     private fun initObservers() {
         viewModel.movieLiveData.observe(viewLifecycleOwner) { movie ->
-            changeActionBarTitle(movie.title)
+            movie.title?.let { changeActionBarTitle(it) }
         }
     }
 
