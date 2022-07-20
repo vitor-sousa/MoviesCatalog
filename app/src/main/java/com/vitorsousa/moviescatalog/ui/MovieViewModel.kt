@@ -6,11 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vitorsousa.moviescatalog.data.DataState
 import com.vitorsousa.moviescatalog.data.Movie
-import com.vitorsousa.moviescatalog.placeholder.PlaceholderContent
 import com.vitorsousa.moviescatalog.source.MovieRepository
 import com.vitorsousa.moviescatalog.utils.SingleLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.vitorsousa.moviescatalog.data.Movie
-
-import com.vitorsousa.moviescatalog.placeholder.PlaceholderContent.PlaceholderItem
 import com.vitorsousa.moviescatalog.databinding.FragmentMoviesItemBinding
 
 interface MovieItemListener {

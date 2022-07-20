@@ -1,14 +1,26 @@
 package com.vitorsousa.moviescatalog.viewBinder
 
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.vitorsousa.moviescatalog.utils.ImageUtils
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+
 
 @BindingAdapter("srcUrl")
 fun ImageView.loadScrUrl(url: String){
     Glide
         .with(this)
-        .load("https://image.tmdb.org/t/p/w300/$url")
+        .load("${ImageUtils.baseImageUrl}$url")
         .centerInside()
         .into(this)
+}
+
+@BindingAdapter("dateToFormat")
+fun TextView.formatToLocalDate(date: String?) {
+    val dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
+    this.text = dateTimeFormatter.format(LocalDate.parse(date))
 }

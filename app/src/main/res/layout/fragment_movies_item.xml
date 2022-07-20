@@ -25,39 +25,41 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
-                app:srcUrl='@{movie.poster_path ?? ""}'
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/movie_poster" />
+                app:srcCompat="@drawable/movie_poster"
+                app:srcUrl='@{movie.poster_path ?? ""}'/>
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text="@{movie.title}"
                 android:textAppearance="?attr/textAppearanceListItem"
+                android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Titlo" />
+                tools:text="Titulo" />
 
             <TextView
-                android:id="@+id/content"
-                android:layout_width="wrap_content"
+                android:id="@+id/releaseDate"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:text="@{movie.release_date}"
-                android:textAppearance="?attr/textAppearanceListItem"
+                app:dateToFormat="@{movie.release_date}"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/title"
-                tools:text="Content" />
+                tools:text="17/05/2020" />
 
             <Button
                 android:id="@+id/button"
