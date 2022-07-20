@@ -51,8 +51,5 @@ class MovieViewModel @Inject constructor(
         _navigationToDetailsLive.postValue(Unit)
     }
 
-    private fun loadMovies() {
-        _appState.value = DataState.SUCCESS
-    }
 
 }

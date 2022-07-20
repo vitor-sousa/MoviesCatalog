@@ -11,8 +11,13 @@ interface MovieItemListener {
     fun onItemSelected(position: Int)
 }
 
+interface ShareMovieListener {
+    fun shareItemClicked(movie: Movie)
+}
+
 class MyMovieRecyclerViewAdapter(
-    private val listener: MovieItemListener
+    private val listener: MovieItemListener,
+    private val shareMovieListener: ShareMovieListener
 ) : RecyclerView.Adapter<MyMovieRecyclerViewAdapter.ViewHolder>() {
 
     private var values: List<Movie> = ArrayList()
@@ -40,12 +45,16 @@ class MyMovieRecyclerViewAdapter(
         holder.view.setOnClickListener {
             listener.onItemSelected(position)
         }
+        holder.shareButton.setOnClickListener {
+            shareMovieListener.shareItemClicked(item)
+        }
     }
 
     override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(private val binding: FragmentMoviesItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val view: View = binding.root
+        val shareButton = binding.shareButton
 
         fun bindItem(item: Movie) {
             binding.movie = item
