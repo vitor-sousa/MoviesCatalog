@@ -26,18 +26,19 @@ class MoviesFragment : Fragment(), MovieItemListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMoviesListBinding.inflate(layoutInflater)
-        val view = binding.root as RecyclerView
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+
         adapter = MyMovieRecyclerViewAdapter(this)
 
-        view.apply {
+        binding.list.apply {
             this.adapter = this@MoviesFragment.adapter
             this.layoutManager = LinearLayoutManager(context)
         }
 
 
-
         initObservers()
-        return view
+        return binding.root
     }
 
     private fun initObservers() {

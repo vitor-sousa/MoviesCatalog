@@ -3,14 +3,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
-        android:name="com.vitorsousa.moviescatalog.MoviesFragment"
+    <data>
+        <import type="com.vitorsousa.moviescatalog.data.DataState"/>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.vitorsousa.moviescatalog.ui.MovieViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:layoutManager="LinearLayoutManager"
-        tools:context=".ui.movieList.MoviesFragment"
-        tools:listitem="@layout/fragment_movies_item" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:name="com.vitorsousa.moviescatalog.MoviesFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".ui.movieList.MoviesFragment"
+            tools:listitem="@layout/fragment_movies_item"
+            android:visibility="@{viewModel.appState == DataState.SUCCESS ? View.VISIBLE : View.GONE}" />
+
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{viewModel.appState == DataState.LOADING ? View.VISIBLE : View.GONE}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/error_try_again"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            style="@style/TextAppearance.Material3.TitleLarge"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{viewModel.appState == DataState.ERROR ? View.VISIBLE : View.GONE}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

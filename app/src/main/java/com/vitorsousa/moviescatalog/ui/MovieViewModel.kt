@@ -7,6 +7,7 @@ import com.vitorsousa.moviescatalog.data.DataState
 import com.vitorsousa.moviescatalog.data.Movie
 import com.vitorsousa.moviescatalog.placeholder.PlaceholderContent
 import com.vitorsousa.moviescatalog.utils.SingleLiveData
+import kotlinx.coroutines.delay
 
 class MovieViewModel: ViewModel() {
 
