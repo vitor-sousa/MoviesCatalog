@@ -1,4 +1,4 @@
-package com.vitorsousa.moviescatalog
+package com.vitorsousa.moviescatalog.utils
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

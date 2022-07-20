@@ -6,8 +6,8 @@
     app:startDestination="@id/moviesFragment">
     <fragment
         android:id="@+id/moviesFragment"
-        android:name="com.vitorsousa.moviescatalog.MoviesFragment"
-        android:label="fragment_movies_list"
+        android:name="com.vitorsousa.moviescatalog.ui.movieList.MoviesFragment"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_movies_list" >
         <action
             android:id="@+id/action_moviesFragment_to_movieDetailsFragment"
@@ -15,7 +15,6 @@
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.vitorsousa.moviescatalog.MovieDetailsFragment"
-        android:label="fragment_movie_details"
+        android:name="com.vitorsousa.moviescatalog.ui.movieDetails.MovieDetailsFragment"
         tools:layout="@layout/fragment_movie_details" />
 </navigation>

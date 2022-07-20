@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.vitorsousa.moviescatalog.MovieViewModel" />
+            type="com.vitorsousa.moviescatalog.ui.MovieViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MovieDetailsFragment">
+        tools:context=".ui.movieDetails.MovieDetailsFragment">
 
 
         <ImageView
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@{viewModel.movieDetailsLiveData.title}"
+            android:text="@{viewModel.movieLiveData.title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/moviePoster"
@@ -44,7 +44,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:text="@{viewModel.movieDetailsLiveData.content}"
+            android:text="@{viewModel.movieLiveData.content}"
             app:layout_constraintBottom_toTopOf="@+id/carousel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

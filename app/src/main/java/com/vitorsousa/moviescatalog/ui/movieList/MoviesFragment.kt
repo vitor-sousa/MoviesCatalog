@@ -1,8 +1,7 @@
-package com.vitorsousa.moviescatalog
+package com.vitorsousa.moviescatalog.ui.movieList
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +9,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.vitorsousa.moviescatalog.databinding.FragmentMovieDetailsBinding
+import com.vitorsousa.moviescatalog.ui.MovieViewModel
 import com.vitorsousa.moviescatalog.databinding.FragmentMoviesListBinding
-import com.vitorsousa.moviescatalog.placeholder.PlaceholderContent
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a list of Movies.
  */
 class MoviesFragment : Fragment(), MovieItemListener {
 
@@ -35,6 +33,8 @@ class MoviesFragment : Fragment(), MovieItemListener {
             this.adapter = this@MoviesFragment.adapter
             this.layoutManager = LinearLayoutManager(context)
         }
+
+
 
         initObservers()
         return view
