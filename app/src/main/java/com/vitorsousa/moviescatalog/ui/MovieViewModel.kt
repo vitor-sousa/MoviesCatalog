@@ -49,6 +49,7 @@ class MovieViewModel @Inject constructor(
 
 
     fun onHQSelected(position: Int) {
+        _movieLiveData.value = _movieListLiveData.value?.get(position)
         _navigationToDetailsLive.postValue(Unit)
     }
 

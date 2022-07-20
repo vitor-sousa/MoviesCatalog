@@ -23,6 +23,7 @@ class MovieDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMovieDetailsBinding.inflate(inflater)
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         initObservers()

@@ -1,9 +1,7 @@
 package com.vitorsousa.moviescatalog.source
 
 import com.vitorsousa.moviescatalog.data.Movie
-import com.vitorsousa.moviescatalog.data.MovieResponse
 import com.vitorsousa.moviescatalog.source.remote.MovieApi
-import retrofit2.Call
 import javax.inject.Inject
 
 class MovieRepositoryImp @Inject constructor(
