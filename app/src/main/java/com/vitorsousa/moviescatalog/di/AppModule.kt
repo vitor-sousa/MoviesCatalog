@@ -1,6 +1,6 @@
 package com.vitorsousa.moviescatalog.di
 
-import com.vitorsousa.moviescatalog.source.remote.MovieApi
+import com.vitorsousa.moviescatalog.api.MovieApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

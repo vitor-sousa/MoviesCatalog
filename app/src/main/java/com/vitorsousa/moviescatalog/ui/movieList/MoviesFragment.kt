@@ -54,8 +54,8 @@ class MoviesFragment : Fragment(), MovieItemListener, ShareMovieListener {
         }
     }
 
-    override fun onItemSelected(position: Int) {
-        viewModel.onHQSelected(position)
+    override fun onItemSelected(id: Int) {
+        viewModel.onHQSelected(id)
     }
 
     override fun shareItemClicked(movie: Movie) {

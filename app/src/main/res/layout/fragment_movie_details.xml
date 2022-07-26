@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.vitorsousa.moviescatalog.data.DataState"/>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.vitorsousa.moviescatalog.ui.MovieViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,7 +20,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/moviePoster"
@@ -42,7 +44,8 @@
                     app:layout_constraintBottom_toBottomOf="@+id/ratingText"
                     app:layout_constraintEnd_toStartOf="@id/ratingText"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/moviePoster" />
+                    app:layout_constraintTop_toBottomOf="@id/moviePoster"
+                    android:visibility="@{viewModel.detailAppState == DataState.SUCCESS ? View.VISIBLE : View.GONE}"/>
 
                 <TextView
                     android:id="@+id/ratingText"
@@ -51,36 +54,65 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="5dp"
-                    android:text="5/10"
+                    tools:text="5/10"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ratingBar"
                     app:layout_constraintTop_toBottomOf="@id/moviePoster" />
 
-                    <TextView
-                        android:id="@+id/movieContent"
-                        style="@style/TextAppearance.Material3.BodyMedium"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:text="@{viewModel.movieLiveData.overview}"
-                        android:textAlignment="center"
-                        app:layout_constraintBottom_toTopOf="@id/carousel"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ratingText"
-                        tools:text="Movie Content" />
+                <TextView
+                    android:id="@+id/movieContent"
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text='@{viewModel.movieLiveData.overview?? ""}'
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toTopOf="@id/carousel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ratingText"
+                    tools:text="Movie Content" />
 
-                    <org.imaginativeworld.whynotimagecarousel.ImageCarousel
-                        android:id="@+id/carousel"
-                        android:layout_width="match_parent"
-                        android:layout_height="256dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/movieContent" />
+                <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+                    android:id="@+id/carousel"
+                    android:layout_width="0dp"
+                    android:layout_height="256dp"
+                    android:visibility="@{viewModel.movieLiveData.production_companies.size() > 0 ? View.VISIBLE : View.GONE}"
+                    app:carouselType="SHOWCASE"
+                    app:imageList="@{viewModel.movieLiveData.carouselImages}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/movieContent"
+                    app:imageScaleType="centerInside"
+                    app:carouselGravity="CENTER"
+                    app:showTopShadow="false"
+                    app:showNavigationButtons="false"
+                    app:scalingFactor="0.15"/>
+
+                <ProgressBar
+                    android:id="@+id/progress_circular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:visibility="@{viewModel.detailAppState == DataState.LOADING ? View.VISIBLE : View.GONE}"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/error_try_again"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.Material3.TitleLarge"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="@{viewModel.detailAppState == DataState.ERROR ? View.VISIBLE : View.GONE}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 </layout>

@@ -8,7 +8,7 @@ import com.vitorsousa.moviescatalog.data.Movie
 import com.vitorsousa.moviescatalog.databinding.FragmentMoviesItemBinding
 
 interface MovieItemListener {
-    fun onItemSelected(position: Int)
+    fun onItemSelected(id: Int)
 }
 
 interface ShareMovieListener {
@@ -43,7 +43,7 @@ class MyMovieRecyclerViewAdapter(
         val item = values[position]
         holder.bindItem(item)
         holder.view.setOnClickListener {
-            listener.onItemSelected(position)
+            item.id?.let { id -> listener.onItemSelected(id) }
         }
         holder.shareButton.setOnClickListener {
             shareMovieListener.shareItemClicked(item)

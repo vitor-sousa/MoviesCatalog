@@ -1,7 +1,7 @@
 package com.vitorsousa.moviescatalog.di
 
-import com.vitorsousa.moviescatalog.source.MovieRepository
-import com.vitorsousa.moviescatalog.source.MovieRepositoryImp
+import com.vitorsousa.moviescatalog.repository.MovieRepository
+import com.vitorsousa.moviescatalog.repository.MovieRepositoryImp
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,4 +17,6 @@ abstract class MovieRepositoryModule {
     abstract fun bindsMovieRepository(
         movieRepositoryImp: MovieRepositoryImp
     ): MovieRepository
+
+
 }
