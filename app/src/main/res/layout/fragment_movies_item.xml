@@ -11,69 +11,25 @@
 
     <com.google.android.material.card.MaterialCardView
         style="?attr/materialCardViewElevatedStyle"
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_width="135dp"
+        android:layout_height="230dp"
         android:layout_margin="8dp"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
         android:id="@+id/cardView">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="120dp"
-                android:layout_height="0dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/movie_poster"
-                app:srcUrl='@{movie.poster_path ?? ""}'/>
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                android:layout_marginTop="5dp"
-                android:text="@{movie.title}"
-                android:textAppearance="?attr/textAppearanceListItem"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Titulo" />
-
-            <TextView
-                android:id="@+id/releaseDate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                app:dateToFormat="@{movie.release_date}"
-                android:textAlignment="center"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/title"
-                tools:text="17/05/2020" />
-
-            <Button
-                android:id="@+id/shareButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="@string/share"
-                app:icon="?attr/actionModeShareDrawable"
-                style="@style/Widget.Material3.Button.TextButton"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/movie_poster"
+            app:srcUrl='@{movie.poster_path ?? ""}'/>
 
     </com.google.android.material.card.MaterialCardView>
+
 </layout>

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vitorsousa.moviescatalog.data.Movie
 import com.vitorsousa.moviescatalog.databinding.FragmentMoviesListBinding
 import com.vitorsousa.moviescatalog.ui.MovieViewModel
@@ -18,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * A fragment representing a list of Movies.
  */
 @AndroidEntryPoint
-class MoviesFragment : Fragment(), MovieItemListener, ShareMovieListener {
+class MoviesFragment : Fragment(), MovieItemListener {
 
     private val viewModel: MovieViewModel by activityViewModels()
     private lateinit var binding: FragmentMoviesListBinding
@@ -32,11 +33,11 @@ class MoviesFragment : Fragment(), MovieItemListener, ShareMovieListener {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        adapter = MyMovieRecyclerViewAdapter(this, this)
+        adapter = MyMovieRecyclerViewAdapter(this)
 
         binding.list.apply {
             this.adapter = this@MoviesFragment.adapter
-            this.layoutManager = LinearLayoutManager(context)
+            this.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         }
 
 
@@ -58,14 +59,5 @@ class MoviesFragment : Fragment(), MovieItemListener, ShareMovieListener {
         viewModel.onHQSelected(id)
     }
 
-    override fun shareItemClicked(movie: Movie) {
-        val sendIntent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, movie.title)
-            type = "text/plain"
-        }
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        startActivity(shareIntent)
-    }
 
 }
