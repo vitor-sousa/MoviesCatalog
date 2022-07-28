@@ -105,6 +105,10 @@ _Below is an example of how you can instruct your audience on installing and set
     <img src="/images/screenshot_movie.png" alt="Screenshot" width="230" height="500">
 </a>
 
+<a href="/images/screenrecord.gif">
+    <img src="/images/screenrecord.gif" alt="ScreenRecord" width="230" height="500">
+</a>
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
