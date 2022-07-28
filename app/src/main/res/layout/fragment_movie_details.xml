@@ -60,10 +60,28 @@
                 android:text='@{viewModel.movieLiveData.title ?? ""}'
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/starImage"
+                app:layout_constraintBottom_toTopOf="@id/movieReleaseDate"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="Title" />
+
+            <TextView
+                android:id="@+id/movieReleaseDate"
+                style="@style/TextAppearance.Material3.LabelMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="5dp"
+                android:shadowColor="#8C333333"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="5"
+                app:dateToFormat="@{viewModel.movieLiveData.release_date}"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@id/starImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="25/05/2022" />
 
             <ImageView
                 android:id="@+id/starImage"
@@ -82,9 +100,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:shadowColor="#8C333333"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="5"
+                android:shadowDx="4"
+                android:shadowDy="4"
+                android:shadowRadius="2"
                 android:text='@{String.format("%.1f", viewModel.movieLiveData.vote_average)}'
                 android:textColor="#ed8a19"
                 app:layout_constraintBottom_toBottomOf="@id/starImage"
