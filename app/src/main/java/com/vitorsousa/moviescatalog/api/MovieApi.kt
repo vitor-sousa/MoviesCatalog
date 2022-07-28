@@ -1,7 +1,7 @@
 package com.vitorsousa.moviescatalog.api
 
+import com.vitorsousa.moviescatalog.data.Movie
 import com.vitorsousa.moviescatalog.data.MovieResponse
-import com.vitorsousa.moviescatalog.data.movieDetail.MovieDetail
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -15,10 +15,16 @@ interface MovieApi {
         @Query("language") language: String
     ) : Response<MovieResponse>
 
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovies(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String
+    ) : Response<MovieResponse>
+
     @GET("movie/{id}")
     suspend fun getMovieDetail(
         @Path("id") id: Int,
         @Query("api_key") apiKey: String,
         @Query("language") language: String
-    ): Response<MovieDetail>
+    ): Response<Movie>
 }

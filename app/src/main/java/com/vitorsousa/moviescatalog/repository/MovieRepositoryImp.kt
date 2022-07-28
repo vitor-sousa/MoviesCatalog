@@ -1,7 +1,6 @@
 package com.vitorsousa.moviescatalog.repository
 
 import com.vitorsousa.moviescatalog.data.Movie
-import com.vitorsousa.moviescatalog.data.movieDetail.MovieDetail
 import com.vitorsousa.moviescatalog.dataSource.MovieDataSource
 import javax.inject.Inject
 import javax.inject.Named
@@ -25,15 +24,29 @@ class MovieRepositoryImp @Inject constructor(
         } catch (e: Exception) {
             getLocalData()
         }
-
     }
 
-    override suspend fun getMovieDetail(id: Int): Result<MovieDetail?> {
+    override suspend fun getTopRatedMovies(): Result<List<Movie>?> {
         return try {
-            val result = movieApiClientDataSource.getMovieDetail(id)
+            val result = movieApiClientDataSource.getTopRatedMovies()
 
             if (result.isSuccess) {
-                saveMovieDetail(result.getOrNull())
+                persistData(result.getOrNull())
+                result
+            } else {
+                movieDatabaseDataSource.getTopRatedMovies()
+            }
+        } catch (e: Exception) {
+            movieDatabaseDataSource.getTopRatedMovies()
+        }
+    }
+
+    override suspend fun getMovieDetail(id: Int): Result<Movie?> {
+        return try {
+            val result = movieApiClientDataSource.getMovie(id)
+
+            if (result.isSuccess) {
+                saveMovieData(result.getOrNull())
                 result
             } else {
                 getLocalMovieDetail(id)
@@ -46,13 +59,13 @@ class MovieRepositoryImp @Inject constructor(
     private suspend fun getLocalData(): Result<List<Movie>?> = movieDatabaseDataSource.getPopularMovies()
 
     private suspend fun persistData(movieList: List<Movie>?) {
-        movieList?.let { movieDatabaseDataSource.saveData(movieList) }
+        movieList?.let { movieDatabaseDataSource.saveMovieList(movieList) }
     }
 
-    private suspend fun getLocalMovieDetail(id: Int): Result<MovieDetail?> = movieDatabaseDataSource.getMovieDetail(id)
+    private suspend fun getLocalMovieDetail(id: Int): Result<Movie?> = movieDatabaseDataSource.getMovie(id)
 
-    private suspend fun saveMovieDetail(movieDetail: MovieDetail?) {
-        movieDetail?.let { movieDatabaseDataSource.saveMovieDetail(movieDetail) }
+    private suspend fun saveMovieData(movie: Movie?) {
+        movie?.let { movieDatabaseDataSource.saveMovie(it) }
     }
 
 

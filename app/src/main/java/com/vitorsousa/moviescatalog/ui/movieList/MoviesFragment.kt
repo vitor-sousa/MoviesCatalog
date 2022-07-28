@@ -1,6 +1,5 @@
 package com.vitorsousa.moviescatalog.ui.movieList
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.vitorsousa.moviescatalog.data.Movie
 import com.vitorsousa.moviescatalog.databinding.FragmentMoviesListBinding
 import com.vitorsousa.moviescatalog.ui.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +21,8 @@ class MoviesFragment : Fragment(), MovieItemListener {
 
     private val viewModel: MovieViewModel by activityViewModels()
     private lateinit var binding: FragmentMoviesListBinding
-    private lateinit var adapter: MyMovieRecyclerViewAdapter
+    private lateinit var adapterPopularMovies: MyMovieRecyclerViewAdapter
+    private lateinit var adapterTopRated: MyMovieRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,13 +32,18 @@ class MoviesFragment : Fragment(), MovieItemListener {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        adapter = MyMovieRecyclerViewAdapter(this)
+        adapterPopularMovies = MyMovieRecyclerViewAdapter(this)
+        adapterTopRated = MyMovieRecyclerViewAdapter(this)
 
-        binding.list.apply {
-            this.adapter = this@MoviesFragment.adapter
+        binding.popularMoviesList.apply {
+            this.adapter = this@MoviesFragment.adapterPopularMovies
             this.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         }
 
+        binding.topRatedMoviesList.apply {
+            this.adapter = this@MoviesFragment.adapterTopRated
+            this.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        }
 
         initObservers()
         return binding.root
@@ -47,7 +51,10 @@ class MoviesFragment : Fragment(), MovieItemListener {
 
     private fun initObservers() {
         viewModel.movieListLiveData.observe(viewLifecycleOwner) {
-            adapter.updateList(it)
+            adapterPopularMovies.updateList(it)
+        }
+        viewModel.movieTopRatedListLiveData.observe(viewLifecycleOwner) {
+            adapterTopRated.updateList(it)
         }
         viewModel.navigationToDetailsLive.observe(viewLifecycleOwner) {
             val action = MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment()
