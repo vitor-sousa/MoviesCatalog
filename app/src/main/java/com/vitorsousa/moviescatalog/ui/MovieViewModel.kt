@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vitorsousa.moviescatalog.data.DataState
 import com.vitorsousa.moviescatalog.data.Movie
-import com.vitorsousa.moviescatalog.data.movieDetail.MovieDetail
 import com.vitorsousa.moviescatalog.repository.MovieRepository
 import com.vitorsousa.moviescatalog.utils.SingleLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,13 +17,17 @@ class MovieViewModel @Inject constructor(
     private val movieRepository: MovieRepository
 ): ViewModel() {
 
-    val movieLiveData: LiveData<MovieDetail?>
+    val movieLiveData: LiveData<Movie?>
         get() = _movieLiveData
-    private val _movieLiveData = MutableLiveData<MovieDetail?>()
+    private val _movieLiveData = MutableLiveData<Movie?>()
 
     val movieListLiveData: LiveData<List<Movie>>
         get() = _movieListLiveData
     private val _movieListLiveData = MutableLiveData<List<Movie>>()
+
+    val movieTopRatedListLiveData: LiveData<List<Movie>>
+        get() = _movieTopRatedListLiveData
+    private val _movieTopRatedListLiveData = MutableLiveData<List<Movie>>()
 
     val navigationToDetailsLive: LiveData<Unit>
         get() = _navigationToDetailsLive
@@ -43,6 +46,7 @@ class MovieViewModel @Inject constructor(
 
     init {
         getMoviesData()
+        getTopRatedMovies()
     }
 
     private fun getMoviesData() {
@@ -54,6 +58,24 @@ class MovieViewModel @Inject constructor(
             movieListResult.fold(
                 onSuccess = {
                     _movieListLiveData.value = it
+                    _appState.value = DataState.SUCCESS
+                },
+                onFailure = {
+                    _appState.value = DataState.ERROR
+                }
+            )
+        }
+    }
+
+    private fun getTopRatedMovies() {
+        _appState.value = DataState.LOADING
+
+        viewModelScope.launch {
+            val movieListResult = movieRepository.getTopRatedMovies()
+
+            movieListResult.fold(
+                onSuccess = {
+                    _movieTopRatedListLiveData.value = it
                     _appState.value = DataState.SUCCESS
                 },
                 onFailure = {

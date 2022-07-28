@@ -2,17 +2,14 @@ package com.vitorsousa.moviescatalog.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.vitorsousa.moviescatalog.data.Movie
 import com.vitorsousa.moviescatalog.dao.MovieDao
-import com.vitorsousa.moviescatalog.dao.MovieDetailDao
-import com.vitorsousa.moviescatalog.data.movieDetail.MovieDetail
+import com.vitorsousa.moviescatalog.data.Movie
 
 @Database(
-    entities = [Movie::class, MovieDetail::class],
+    entities = [Movie::class],
     version = 1,
-    exportSchema = false
+    exportSchema = true
 )
 abstract class MoviesDatabase: RoomDatabase() {
     abstract fun movieDao(): MovieDao
-    abstract fun movieDetailDao(): MovieDetailDao
 }

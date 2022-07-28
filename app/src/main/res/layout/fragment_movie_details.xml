@@ -18,101 +18,162 @@
         android:scrollbars="vertical"
         tools:context=".ui.movieDetails.MovieDetailsFragment">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/backFloatingButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                app:fabSize="mini"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_chevron_left" />
+
+            <ImageView
+                android:id="@+id/moviePoster"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                app:srcUrl='@{viewModel.movieLiveData.backdrop_path ?? ""}'
+                tools:src="@drawable/movie_poster" />
+
+            <TextView
+                android:id="@+id/movieTitle"
+                style="@style/TextAppearance.Material3.TitleLarge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="5dp"
+                android:shadowColor="#8C333333"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="5"
+                android:text='@{viewModel.movieLiveData.title ?? ""}'
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/starImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Title" />
+
+            <ImageView
+                android:id="@+id/starImage"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="15dp"
+                app:layout_constraintBottom_toTopOf="@id/scrollViewChipGroup"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/star" />
+
+            <TextView
+                android:id="@+id/ratingText"
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:shadowColor="#8C333333"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="5"
+                android:text='@{String.format("%.1f", viewModel.movieLiveData.vote_average)}'
+                android:textColor="#ed8a19"
+                app:layout_constraintBottom_toBottomOf="@id/starImage"
+                app:layout_constraintStart_toEndOf="@id/starImage"
+                app:layout_constraintTop_toTopOf="@id/starImage"
+                tools:text="5" />
+
+            <HorizontalScrollView
+                android:id="@+id/scrollViewChipGroup"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/moviePoster"
+                android:visibility="@{viewModel.movieLiveData.genres.size() > 0 ? View.VISIBLE : View.GONE}"
+                android:scrollbars="none">
 
-                <ImageView
-                    android:id="@+id/moviePoster"
-                    android:layout_width="0dp"
-                    android:layout_height="300dp"
-                    android:scaleType="fitCenter"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcUrl='@{viewModel.movieLiveData.poster_path ?? ""}'
-                    tools:src="@drawable/movie_poster" />
-
-                <RatingBar
-                    android:id="@+id/ratingBar"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
-                    android:numStars="10"
-                    app:layout_constraintBottom_toBottomOf="@+id/ratingText"
-                    app:layout_constraintEnd_toStartOf="@id/ratingText"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/moviePoster"
-                    android:visibility="@{viewModel.detailAppState == DataState.SUCCESS ? View.VISIBLE : View.GONE}"/>
-
-                <TextView
-                    android:id="@+id/ratingText"
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="5dp"
-                    tools:text="5/10"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/ratingBar"
-                    app:layout_constraintTop_toBottomOf="@id/moviePoster" />
-
-                <TextView
-                    android:id="@+id/movieContent"
-                    style="@style/TextAppearance.Material3.BodyMedium"
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupGenres"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:text='@{viewModel.movieLiveData.overview?? ""}'
-                    android:textAlignment="center"
-                    app:layout_constraintBottom_toTopOf="@id/carousel"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ratingText"
-                    tools:text="Movie Content" />
+                    android:padding="16dp"
+                    app:singleLine="true"/>
 
-                <org.imaginativeworld.whynotimagecarousel.ImageCarousel
-                    android:id="@+id/carousel"
-                    android:layout_width="0dp"
-                    android:layout_height="256dp"
-                    android:visibility="@{viewModel.movieLiveData.production_companies.size() > 0 ? View.VISIBLE : View.GONE}"
-                    app:carouselType="SHOWCASE"
-                    app:imageList="@{viewModel.movieLiveData.carouselImages}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/movieContent"
-                    app:imageScaleType="centerInside"
-                    app:carouselGravity="CENTER"
-                    app:showTopShadow="false"
-                    app:showNavigationButtons="false"
-                    app:scalingFactor="0.15"/>
+            </HorizontalScrollView>
 
-                <ProgressBar
-                    android:id="@+id/progress_circular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="@{viewModel.detailAppState == DataState.LOADING ? View.VISIBLE : View.GONE}"/>
+            <TextView
+                android:id="@+id/movieOverview"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:text='@{viewModel.movieLiveData.overview?? ""}'
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@id/carousel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/scrollViewChipGroup"
+                tools:text="movie Overview" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/error_try_again"
-                    android:textAlignment="center"
-                    android:textStyle="bold"
-                    style="@style/TextAppearance.Material3.TitleLarge"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:visibility="@{viewModel.detailAppState == DataState.ERROR ? View.VISIBLE : View.GONE}" />
+            <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+                android:id="@+id/carousel"
+                android:layout_width="0dp"
+                android:layout_height="256dp"
+                android:visibility="@{viewModel.movieLiveData.production_companies.size() > 0 ? View.VISIBLE : View.GONE}"
+                app:bottomShadowAlpha="0"
+                app:carouselGravity="CENTER"
+                app:carouselType="SHOWCASE"
+                app:imageList="@{viewModel.movieLiveData.carouselImages}"
+                app:imageScaleType="centerInside"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/movieOverview"
+                app:scalingFactor="0.15"
+                app:showNavigationButtons="false"
+                app:showTopShadow="false" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <ProgressBar
+                android:id="@+id/progress_circular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.detailAppState == DataState.LOADING ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/TextAppearance.Material3.TitleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/error_try_again"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:visibility="@{viewModel.detailAppState == DataState.ERROR ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="20dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

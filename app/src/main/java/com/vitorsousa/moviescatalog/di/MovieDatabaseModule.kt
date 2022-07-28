@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import com.vitorsousa.moviescatalog.database.MoviesDatabase
 import com.vitorsousa.moviescatalog.dao.MovieDao
-import com.vitorsousa.moviescatalog.dao.MovieDetailDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,10 +20,6 @@ class MovieDatabaseModule {
         return moviesDatabase.movieDao()
     }
 
-    @Provides
-    fun provideMovieDetailDao(moviesDatabase: MoviesDatabase): MovieDetailDao {
-        return moviesDatabase.movieDetailDao()
-    }
 
     @Provides
     @Singleton

@@ -1,4 +1,4 @@
-package com.vitorsousa.moviescatalog.data.movieDetail
+package com.vitorsousa.moviescatalog.data
 
 import com.squareup.moshi.JsonClass
 

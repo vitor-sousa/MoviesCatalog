@@ -3,12 +3,9 @@ package com.vitorsousa.moviescatalog.di
 import android.app.Application
 import com.vitorsousa.moviescatalog.api.MovieApi
 import com.vitorsousa.moviescatalog.dao.MovieDao
-import com.vitorsousa.moviescatalog.dao.MovieDetailDao
 import com.vitorsousa.moviescatalog.dataSource.MovieApiClientDataSource
 import com.vitorsousa.moviescatalog.dataSource.MovieDataSource
 import com.vitorsousa.moviescatalog.dataSource.MovieDatabaseDataSource
-import com.vitorsousa.moviescatalog.database.MoviesDatabase
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,10 +33,9 @@ class MovieDataSource {
     @Singleton
     @Named("database")
     fun providesMovieDatabaseDataSource(
-        moviesDao: MovieDao,
-        movieDetailDao: MovieDetailDao
+        moviesDao: MovieDao
     ): MovieDataSource {
-        return MovieDatabaseDataSource(moviesDao, movieDetailDao)
+        return MovieDatabaseDataSource(moviesDao)
     }
 
 }
